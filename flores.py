@@ -41,7 +41,7 @@ warnings.filterwarnings("ignore")
 # set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
     page_title="Reconocimiento de Flores",
-    page_icon = ":smile:",
+    page_icon = ":rose:",
     initial_sidebar_state = 'auto'
 )
 
@@ -69,15 +69,21 @@ with st.sidebar:
         st.image('rosa.jpg')
         st.title("Reconocimiento de imagen")
         st.subheader("Reconocimiento de imagen para flores")
+        confianza=st.slider("Seleccione la confianza %", 0, 100, 50)/100
+
+col1, col2, col3 = st.columns(3)
+
 
 #st.image('logo.png')
-st.title("Smart Regions Center")
+st.title("Modelo de reconocimiento de flores")
 st.write("Somos un equipo apasionado de profesionales dedicados a hacer la diferencia")
 st.write("""
          # Detección de flores
          """
          )
 
+with col2:
+     st.image('rosa.jpg')
 
 def import_and_predict(image_data, model, class_names):
     
@@ -110,7 +116,7 @@ else:
     
     # Mostrar el resultado
 
-    if np.max(score)>0.5:
+    if np.max(score)>confianza:
         st.subheader(f"Tipo de Flor: {class_name}")
         st.text(f"Puntuación de confianza: {100 * np.max(score):.2f}%")
     else:
